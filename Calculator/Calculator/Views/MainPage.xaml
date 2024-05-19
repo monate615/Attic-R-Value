@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Calculator.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:datePicker="clr-namespace:Syncfusion.XForms.Pickers;assembly=Syncfusion.SfPicker.XForms"
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    xmlns:textInput="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:viewModels="clr-namespace:Calculator.ViewModels"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                
+                <!-- Header -->
+                <Grid Grid.Row="0">
+                    <border:SfBorder BorderThickness="0, 0, 0, 1"
+                                     BorderColor="Gray" />
+                    <Label Text="Attic R-Value Tool"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Margin="0, 0, 0, 0"
+                       TextColor="DeepPink"
+                       FontSize="30" />
+                </Grid>
+
+                <!-- Output -->
+                <Grid Grid.Row="1">
+                    <Grid.BindingContext>
+                        <viewModels:ResultViewModel />
+                    </Grid.BindingContext>
+                    <Label Margin="110, 10, 0, 0"
+                           Text="R Value:"
+                           FontSize="25"
+                           TextColor="Gray" />
+                    <Label HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Margin="0, 0, 0, 10"
+                           Text="{Binding Result}"
+                           TextColor="Blue"
+                           FontSize="70">
+                    </Label>
+                    <Label Margin="0, 0, 80, 10"
+                                         VerticalOptions="End"
+                                         HorizontalOptions="End"
+                                         WidthRequest="150"
+                                         HeightRequest="40"
+                                         TextColor="Blue"
+                                         Text="{Binding Unit}" >
+                        <Label.BindingContext>
+                            <viewModels:ResultViewModel />
+                        </Label.BindingContext>
+                    </Label>
+                </Grid>
+
+                <!-- Options -->
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="7*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+                        
+                    <!-- Numerical options -->
+                    <Grid Grid.Column="0" Margin="5">
+                        <Grid.BindingContext>
+                            <viewModels:NumericalOptionViewModel />
+                        </Grid.BindingContext>
+                        <border:SfBorder  CornerRadius="20"
+                                          BorderThickness="1"
+                                          BorderColor="LightGray" />
+                        <StackLayout>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <textInput:SfTextInputLayout
+                                        Grid.Column="0"
+                                        HorizontalOptions="Center"
+                                        Hint="Slope  ( /12)" 
+                                        Margin="20, 30, 5, 0"
+                                        ContainerType="Outlined">
+                                    <Entry Text="{Binding Slope}" FontSize="15" />
+                                </textInput:SfTextInputLayout>
+                                <textInput:SfTextInputLayout
+                                        Grid.Column="1"
+                                        HorizontalOptions="Center"
+                                        Hint="Deck Emitt." 
+                                        Margin="5, 30, 5, 0"
+                                        ContainerType="Outlined">
+                                    <Entry Text="{Binding DeckEmitt}" FontSize="15" />
+                                </textInput:SfTextInputLayout>
+                                <textInput:SfTextInputLayout
+                                        Grid.Column="2"
+                                        HorizontalOptions="Center"
+                                        Hint="Floor Emitt." 
+                                        Margin="5, 30, 20, 0"
+                                        ContainerType="Outlined">
+                                    <Entry Text="{Binding FloorEmitt}" FontSize="15" />
+                                </textInput:SfTextInputLayout>
+                            </Grid>
+                            <textInput:SfTextInputLayout
+                                HorizontalOptions="Center"
+                                Hint="Thermal Conductivity" 
+                                Margin="20, 0, 20, 0"
+                                ContainerType="Outlined">
+                                <Entry Text="{Binding ThermalConductivity}" FontSize="15" />
+                            </textInput:SfTextInputLayout>
+                        </StackLayout>
+                    </Grid>
+
+                    <!-- Switch options -->
+                    <Grid Grid.Column="1" Margin="0, 5, 5, 5">
+                        <border:SfBorder  CornerRadius="20"
+                                          BorderThickness="1"
+                                          BorderColor="LightGray" />
+                        <Grid>
+                            <Grid.BindingContext>
+                                <viewModels:SwitchOptionViewModel />
+                            </Grid.BindingContext>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" VerticalOptions="End" HorizontalOptions="Center" Text="Heat Flow Down" HorizontalTextAlignment="Center" />
+                                <button:SfSwitch Orientation="Vertical"
+                                                 Grid.Row="1"
+                                                 FlowDirection="RightToLeft"
+                                                 IsOn="{Binding IsHeatFlowDown}" />
+                                <Label Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Center" Text="Heat Flow Up" HorizontalTextAlignment="Center" />
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" VerticalOptions="End" HorizontalOptions="Center" Text="Deck" HorizontalTextAlignment="Center" />
+                                <button:SfSwitch Orientation="Vertical"
+                                                 Grid.Row="1"
+                                                 FlowDirection="RightToLeft"
+                                                 IsOn="{Binding IsDeck}" />
+                                <Label Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Center" Text="Floor" HorizontalTextAlignment="Center" />
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" VerticalOptions="End" HorizontalOptions="Center" Text="IP Units" HorizontalTextAlignment="Center" />
+                                <button:SfSwitch Orientation="Vertical"
+                                                 Grid.Row="1"
+                                                 FlowDirection="RightToLeft"
+                                                 IsOn="{Binding IsIPUnits}" />
+                                <Label Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Center" Text="SI Units" HorizontalTextAlignment="Center" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                </Grid>
+                
+                <!-- Buttons -->
+                <Grid Grid.Row="3">
+                    <StackLayout HorizontalOptions="End"
+                                 Orientation="Horizontal"
+                                 Margin="0, 0, 30, 0">
+                        <button:SfButton Text="Compute"
+                                         FontSize="15"
+                                         Margin="0, 0, 0, 10"
+                                         CornerRadius="20"
+                                         BackgroundColor="DeepPink"
+                                         TextColor="White"
+                                         HorizontalOptions="End"
+                                         VerticalOptions="Center" />
+                        <button:SfButton Text="Clear"
+                                         FontSize="15"
+                                         CornerRadius="20"
+                                         Margin="0, 0, 10, 10"
+                                         BackgroundColor="LightGray"
+                                         TextColor="White"
+                                         HorizontalOptions="End"
+                                         VerticalOptions="Center" />
+                    </StackLayout>
+                </Grid>
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+    
+</ContentPage>
